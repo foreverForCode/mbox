@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue.js"></script>
+   <script src="./plugin/vueMbox/mbox.js"></script>
+  <link rel="stylesheet" href="./plugin/vueMbox/mbox.css">
+   
+       
+</head>
+
+<body>
+    <div id="root">
+        <!-- <button @click="test">test</button> -->
+        <button @click="openTop()">top</button>
+        <button @click="openCenter()">center</button>
+        <button @click="openBottom()">bottom</button>
+        <button @click="openLoading()">loading</button>
+    </div>
+    <!-- <div v-show="show" class="lx-load-mark">
+        <div class="lx-load-box">
+            <div class="lx-loading">
+                <div class="loading_leaf loading_leaf_0"></div>
+                <div class="loading_leaf loading_leaf_1"></div>
+                <div class="loading_leaf loading_leaf_2"></div>
+                <div class="loading_leaf loading_leaf_3"></div>
+                <div class="loading_leaf loading_leaf_4"></div>
+                <div class="loading_leaf loading_leaf_5"></div>
+                <div class="loading_leaf loading_leaf_6"></div>
+                <div class="loading_leaf loading_leaf_7"></div>
+                <div class="loading_leaf loading_leaf_8"></div>
+                <div class="loading_leaf loading_leaf_9"></div>
+                <div class="loading_leaf loading_leaf_10"></div>
+                <div class="loading_leaf loading_leaf_11"></div>
+            </div>
+            <div class="lx-load-content">' + tips + '</div>
+        </div>
+    </div> -->
+</body>
+<script>
+   Vue.use(Toast, {
+    defaultType: 'center',
+    duration: 3000,
+    wordWrap: true,
+    width: '400px'
+});
+    var app = new Vue({
+        el: '#root',
+        methods: {
+            // test: function () {
+            //     this.$nomal('open')
+            // },
+            openTop() {
+                this.$toast.top('top');
+            },
+            openCenter() {
+                this.$toast.center('center');
+            },
+            openBottom() {
+                this.$toast('bottom'); // or this.$toast.bottom('bottom'); 
+            },
+            openLoading() {
+                this.$loading('loading...');
+                let self = this;
+                setTimeout(function () {
+                    self.closeLoading()
+                }, 2000)
+            },
+            closeLoading() {
+                this.$loading.close();
+            }
+        }
+    });
+</script>
+
+</html>
