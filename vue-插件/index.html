@@ -128,7 +128,7 @@
     var app = new Vue({
         el: '#root',
         methods: {
-            test:this.mBox.toast({ cell: "yes", content: '保存成功了', type: 'success', time: 5 })
+            test:function(){this.$toast({ cell: "yes", content: '保存成功了', type: 'success', time: 5 })}
         }
     });
 </script>
