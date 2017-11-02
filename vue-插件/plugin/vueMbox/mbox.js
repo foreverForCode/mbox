@@ -298,9 +298,9 @@ Toast.install = function (Vue, options) {
 
     //获取元素节点
 
-    // Vue.prototype.mBox.Q = mBox.Q = function (elem) {
-    //     return $QM(elem)[0];
-    // };
+    mBox.Q = function (elem) {
+        return $QM(elem)[0];
+    };
     //弹出式提示
     mBox.toast = function (options) {
         var conHtml = "",
@@ -344,212 +344,156 @@ Toast.install = function (Vue, options) {
         });
     };
     Vue.prototype.$toast = function(options){
-        var conHtml = "",
-        asscon = {
-            "background-color": "rgba(0,0,0,0.80)",
-            "color": "#fff"
-        },
-        opts = Object.assign({
-            width: '',
+        mBox.toast(options);
+    }
+    
+   
+    // 警告提示
+    mBox.alert = function (text) {
+        return mBox({
+            width: '86%',
             padding: "20px 10px",
+            content: text,
+            yesCall: {
+                name: "确定",
+                fun: function (idx) {
+                    mBox.close(idx)
+                }
+            }
+        });
+    };
+    Vue.prototype.$alert = function(text){
+        mBox.alert(text);
+    }
+    //通知提示
+    mBox.notice = function (options) {
+        var opts = Object.assign({
+                content: "",
+                time: 5,
+                conStyle: {}
+            }, options),
+            asscon = {
+                position: "fixed",
+                top: 0,
+                left: 0,
+                "background-color": "rgba(0,0,0,0.80)",
+                "color": "#fff"
+            };
+        return mBox({
+            cell: opts.cell,
+            width: '100%',
+            padding: "8px 10px",
+            time: opts.time,
+            radius: "0px",
+            content: "<div class='jemtc'>" + opts.content + "</div>",
+            mask: false,
+            conStyle: Object.assign(asscon, opts.conStyle)
+        });
+    };
+    Vue.prototype.$notice = function(options){
+        mBox.notice(options)
+    }
+    //弹出式菜单
+    mBox.actionSheet = function (options) {
+        //合并默认的API
+        var opts = Object.assign({
+            title: "",
+            closeBtn: [false, 1],
             content: "",
-            conStyle: {},
-            type: "",
+            skins: "",
             time: 0,
-            success: null
+            conStyle: {},
+            success: null,
+            yesCall: null,
+            noCall: {
+                name: "取消"
+            }
         }, options);
-        //判断类型
-        switch (opts.type) {
-            case "none":
-                conHtml = "<div class='jemtc'>" + opts.content + "</div>";
-                break;
-            case "success":
-                conHtml = "<div class='success'></div><div class='jemtc'>" + opts.content + "</div>";
-                break;
-            case "error":
-                conHtml = "<div class='error'></div><div class='jemtc'>" + opts.content + "</div>";
-                break;
-            case "loading":
-                conHtml = "<div class='loading'><span></span></div><div class='jemtc'>" + opts.content + "</div>";
-                break;
+        //判断向上弹出层的效果类型
+        if (opts.skins == "websheet") {
+            var childWidth = '100%',
+                bgColor = {
+                    "background-color": "#fff"
+                };
+        } else if (opts.skins == "itemsheet") {
+            var childWidth = '95%',
+                bgColor = {
+                    "background-color": "rgba(255,255,255,0)"
+                };
         }
         return mBox({
             cell: opts.cell,
-            width: opts.width,
-            padding: opts.padding,
-            mask: false,
+            width: childWidth,
+            padding: "0px",
             time: opts.time,
-            content: conHtml,
-            conStyle: Object.assign(asscon, opts.conStyle),
-            success: opts.success
+            title: opts.title,
+            closeBtn: opts.closeBtn,
+            skin: opts.skins,
+            radius: "",
+            content: opts.content,
+            conStyle: Object.assign(bgColor, opts.conStyle),
+            success: opts.success,
+            yesCall: opts.yesCall,
+            noCall: opts.noCall
         });
+    };
+    Vue.prototype.$actionSheet = function(options){
+        mBox.actionSheet(options)
     }
-    // Vue.prototype.mBox.toast = mBox.toast = function (options) {
-    //     var conHtml = "",
-    //         asscon = {
-    //             "background-color": "rgba(0,0,0,0.80)",
-    //             "color": "#fff"
-    //         },
-    //         opts = Object.assign({
-    //             width: '',
-    //             padding: "20px 10px",
-    //             content: "",
-    //             conStyle: {},
-    //             type: "",
-    //             time: 0,
-    //             success: null
-    //         }, options);
-    //     //判断类型
-    //     switch (opts.type) {
-    //         case "none":
-    //             conHtml = "<div class='jemtc'>" + opts.content + "</div>";
-    //             break;
-    //         case "success":
-    //             conHtml = "<div class='success'></div><div class='jemtc'>" + opts.content + "</div>";
-    //             break;
-    //         case "error":
-    //             conHtml = "<div class='error'></div><div class='jemtc'>" + opts.content + "</div>";
-    //             break;
-    //         case "loading":
-    //             conHtml = "<div class='loading'><span></span></div><div class='jemtc'>" + opts.content + "</div>";
-    //             break;
-    //     }
-    //     return mBox({
-    //         cell: opts.cell,
-    //         width: opts.width,
-    //         padding: opts.padding,
-    //         mask: false,
-    //         time: opts.time,
-    //         content: conHtml,
-    //         conStyle: Object.assign(asscon, opts.conStyle),
-    //         success: opts.success
-    //     });
-    // };
-    //警告提示
-    // Vue.prototype.mBox.alert = mBox.alert = function (text) {
-    //     return mBox({
-    //         width: '86%',
-    //         padding: "20px 10px",
-    //         content: text,
-    //         yesCall: {
-    //             name: "确定",
-    //             fun: function (idx) {
-    //                 mBox.close(idx)
-    //             }
-    //         }
-    //     });
-    // };
-    // //通知提示
-    // Vue.prototype.mBox.notice = mBox.notice = function (options) {
-    //     var opts = Object.assign({
-    //             content: "",
-    //             time: 5,
-    //             conStyle: {}
-    //         }, options),
-    //         asscon = {
-    //             position: "fixed",
-    //             top: 0,
-    //             left: 0,
-    //             "background-color": "rgba(0,0,0,0.80)",
-    //             "color": "#fff"
-    //         };
-    //     return mBox({
-    //         cell: opts.cell,
-    //         width: '100%',
-    //         padding: "8px 10px",
-    //         time: opts.time,
-    //         radius: "0px",
-    //         content: "<div class='jemtc'>" + opts.content + "</div>",
-    //         mask: false,
-    //         conStyle: Object.assign(asscon, opts.conStyle)
-    //     });
-    // };
-    // //弹出式菜单
-    // Vue.prototype.mBox.actionSheet = mBox.actionSheet = function (options) {
-    //     //合并默认的API
-    //     var opts = Object.assign({
-    //         title: "",
-    //         closeBtn: [false, 1],
-    //         content: "",
-    //         skins: "",
-    //         time: 0,
-    //         conStyle: {},
-    //         success: null,
-    //         yesCall: null,
-    //         noCall: {
-    //             name: "取消"
-    //         }
-    //     }, options);
-    //     //判断向上弹出层的效果类型
-    //     if (opts.skins == "websheet") {
-    //         var childWidth = '100%',
-    //             bgColor = {
-    //                 "background-color": "#fff"
-    //             };
-    //     } else if (opts.skins == "itemsheet") {
-    //         var childWidth = '95%',
-    //             bgColor = {
-    //                 "background-color": "rgba(255,255,255,0)"
-    //             };
-    //     }
-    //     return mBox({
-    //         cell: opts.cell,
-    //         width: childWidth,
-    //         padding: "0px",
-    //         time: opts.time,
-    //         title: opts.title,
-    //         closeBtn: opts.closeBtn,
-    //         skin: opts.skins,
-    //         radius: "",
-    //         content: opts.content,
-    //         conStyle: Object.assign(bgColor, opts.conStyle),
-    //         success: opts.success,
-    //         yesCall: opts.yesCall,
-    //         noCall: opts.noCall
-    //     });
-    // };
-    // //关闭单个层
-    // Vue.prototype.mBox.close = mBox.close = function (mid) {
-    //     var mCell = $QM("#jembox" + mid)[0],
-    //         maskCell = $QM("#jemmask" + mid),
-    //         conCell = $QM(".jemboxmcont", "#jembox" + mid)[0];
-    //     if (!mCell) return;
-    //     //关闭时移除动画效果
-    //     $QM(".jemboxchild", "#jembox" + mid)[0].classList.remove("jemanim-" + mCell.getAttribute("skin"));
-    //     //动画效果移除后，再删除弹层
-    //     var animas = (function () {
-    //         var t, el = document.createElement('mboxelement'),
-    //             transitions = {
-    //                 'transition': 'transitionend',
-    //                 'OTransition': 'oTransitionEnd',
-    //                 'MozTransition': 'transitionend',
-    //                 'WebkitTransition': 'webkitTransitionEnd'
-    //             };
-    //         for (t in transitions) {
-    //             if (el.style[t] !== undefined) return transitions[t];
-    //         }
-    //     })();
-    //     animas && mCell.addEventListener(animas, function () { //动画结束时事件
-    //         if (mCell.getAttribute("contype") == "html") {
-    //             backSitu(conCell, JM.Wprev, JM.Wnext, JM.Wparent, JM.WisShow);
-    //         }
-    //         if (maskCell.length > 0) doc.body.removeChild(maskCell[0]);
-    //         doc.body.removeChild(mCell);
-    //     }, false);
-    //     clearTimeout(JM.timer[idx]);
-    //     delete JM.timer[idx];
-    //     JM.isType(JM.endCall[idx], "function") && JM.endCall[idx]();
-    //     delete JM.endCall[idx];
-    // };
-    // //关闭所有弹层
-    // Vue.prototype.mBox.closeAll = mBox.closeAll = function () {
-    //     var allboxs = $QM(".jemboxer");
-    //     for (var c = 0; c < allboxs.length; c++) {
-    //         mBox.close(allboxs[c].getAttribute("jmidx"));
-    //     }
-    // };
+    //关闭单个层
+    mBox.close = function (mid) {
+        var mCell = $QM("#jembox" + mid)[0],
+            maskCell = $QM("#jemmask" + mid),
+            conCell = $QM(".jemboxmcont", "#jembox" + mid)[0];
+        if (!mCell) return;
+        //关闭时移除动画效果
+        $QM(".jemboxchild", "#jembox" + mid)[0].classList.remove("jemanim-" + mCell.getAttribute("skin"));
+        //动画效果移除后，再删除弹层
+        var animas = (function () {
+            var t, el = document.createElement('mboxelement'),
+                transitions = {
+                    'transition': 'transitionend',
+                    'OTransition': 'oTransitionEnd',
+                    'MozTransition': 'transitionend',
+                    'WebkitTransition': 'webkitTransitionEnd'
+                };
+            for (t in transitions) {
+                if (el.style[t] !== undefined) return transitions[t];
+            }
+        })();
+        animas && mCell.addEventListener(animas, function () { //动画结束时事件
+            if (mCell.getAttribute("contype") == "html") {
+                backSitu(conCell, JM.Wprev, JM.Wnext, JM.Wparent, JM.WisShow);
+            }
+            if (maskCell.length > 0) doc.body.removeChild(maskCell[0]);
+            doc.body.removeChild(mCell);
+        }, false);
+        clearTimeout(JM.timer[idx]);
+        delete JM.timer[idx];
+        JM.isType(JM.endCall[idx], "function") && JM.endCall[idx]();
+        delete JM.endCall[idx];
+    };
+    Vue.prototype.$close = function(mid){
+        mBox.close(mid)
+    }
+    //关闭所有弹层
+    mBox.closeAll = function () {
+        var allboxs = $QM(".jemboxer");
+        for (var c = 0; c < allboxs.length; c++) {
+            mBox.close(allboxs[c].getAttribute("jmidx"));
+        }
+    };
+    Vue.prototype.$closeAll = function(){
+        mBox.closeAll()
+    }
 
-
-
-
+}
+if(typeof exports == 'object'){
+    module.exports = Toast
+}else if(typeof define == 'function' && define.amd){
+    define([],function(){return Toast})
+}else if(window.Vue){
+    window.Toast = Toast;
+    Vue.use(Toast);
+   
 }

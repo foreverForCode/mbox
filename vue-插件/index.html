@@ -101,7 +101,7 @@
 <body>
     <div id="root">
         <button @click="test">test</button>
-        
+        <button @click="testalert">test</button>
     </div>
     <!-- <div v-show="show" class="lx-load-mark">
         <div class="lx-load-box">
@@ -124,11 +124,12 @@
     </div> -->
 </body>
 <script>
-   Vue.use(Toast);
+   
     var app = new Vue({
         el: '#root',
         methods: {
-            test:function(){this.$toast({ cell: "yes", content: '保存成功了', type: 'success', time: 5 })}
+            test:function(){this.$toast({ cell: "yes", content: '保存成功了', type: 'success', time: 5 })},
+            testalert:function(){this.$alert("<div class='jemtc'>消息一出，休想滚动屏幕【移动终端】！</div>")}
         }
     });
 </script>
