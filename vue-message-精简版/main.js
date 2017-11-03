@@ -1,18 +1,18 @@
-import messageboxComponet from './vue-messagebox.vue'
+let messageboxComponet = `
+<section class="messagebox-container">
+    <div class="messagebox" v-if="visible">
+        <h2>标题</h2>
+    </div>
+</section>
+`;
 let  messagebox = {};
 messagebox.install = function (Vue,options) {
     var opt = {
-        buttonName:['取消','确认'],
-        buttonColor:['#333','#fff'],
-        buttonBgcolor:['#fff','#50bfff'],
-        bgColor:'#fff',
-        cb:function () {
-
-        }
+        visible:false,
     }
-    for (var key in options){
-        opt[key] = options [key]
-    }
+    // for (var key in options){
+    //     opt[key] = options [key]
+    // }
     const messageboxControll = Vue.extend(messageboxComponet); //Vue 扩展实例
     var instance = new messageboxControll().$mount(document.createElement('div'));
     console.log(instance)
@@ -55,5 +55,6 @@ if(window.Vue){
     Vue.use(messagebox)
 }
 export default messagebox;
+
 
 

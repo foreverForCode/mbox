@@ -17,7 +17,7 @@ Toast.install = function (Vue, options) {
             return doc.querySelectorAll(root ? (root + " " + elem) : elem);
         }; // $QM ----------------> 获取节点
 
-    JM.isType = function (obj, type) {
+    JM.isType = function (obj, type) {    //obj --->[object string]  type ---> object or string
         type = type.replace(/(\w)/, function (v) {
             return v.toUpperCase()
         });
