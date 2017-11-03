@@ -7,18 +7,25 @@
     <script type="text/javascript" src="./dist/build.js"></script>
 </head>
 <body>
+   
     <div id="app">
-        <a href="javascript:;" @click="toast">点击弹出messageBox</a>
+        <a href="javascript:;" @click="general">普通弹框</a>
+        <a href="javascript:;" @click="generalNoTitle">消息弹框</a>
     </div>
 </body>
 <script type="text/javascript">
     new Vue({
         el:'#app',
         methods:{
-            toast:function(){
-                this.$messagebox.show({'title':'hello','describe':'everyOne'},{cb:function () {
+            general:function(){
+                this.$messagebox.show({'title':'这是标题','describe':'这是内容区'},{mainStyle:{width:'400px',height:'200px'},type:'general',titleStatus:true,cb:function () {
                     alert('点击确认以后的回调')
-                },buttonName:['关闭','确定']});
+                },buttonName:['取消','确定']});
+            },
+            generalNoTitle:function(){
+                this.$messagebox.show({'title':'这是标题','describe':'是否确定'},{mainStyle:{width:'160px',height:'102px'},type:'general',titleStatus:false,cb:function () {
+                    alert('点击确认以后的回调')
+                },buttonName:['取消','确定']});
             }
         }
     })

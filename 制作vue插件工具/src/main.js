@@ -2,6 +2,11 @@ import messageboxComponet from './App.vue';
 let  messagebox = {};
 messagebox.install = function (Vue,options) {
     var opt = {
+        mainStyle:{
+            width:'400px',
+            height:'200px'
+        },
+        titleBgColor:'#50bfff',
         buttonName:['取消','确认'],
         buttonColor:['#333','#fff'],
         buttonBgcolor:['#fff','#50bfff'],
