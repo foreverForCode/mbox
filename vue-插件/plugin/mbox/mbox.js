@@ -24,6 +24,7 @@
         JM = { timer: {}, endCall: {} }, 
         regPxe = /\px|pt|em|rem/g,
         $QM = function (elem, root) {
+;            console.log(root);
             return doc.querySelectorAll(root ? (root + " " + elem) : elem);
         }; // $QM ----------------> 获取节点
 
