@@ -9,8 +9,15 @@
 <body>
    
     <div id="app">
-        <a href="javascript:;" @click="general">普通弹框</a>
-        <a href="javascript:;" @click="generalNoTitle">消息弹框</a>
+        <a @click="general">普通弹框</a>
+        <a @click="generalNoTitle">消息弹框</a>
+        <a @click="successbtn">成功logo</a>
+        <a @click="errorbtn">失败logo</a>
+        <a @click="nonebtn">nonelogo</a>
+        <a @click="loadingbtn">loadinglogo</a>
+        <a @click="noticelogo">noticelogo</a>
+        <a @click="alertlogo">alertlogo</a>
+        
     </div>
 </body>
 <script type="text/javascript">
@@ -18,15 +25,36 @@
         el:'#app',
         methods:{
             general:function(){
-                this.$messagebox.show({'title':'这是标题','describe':'这是内容区'},{mainStyle:{width:'400px',height:'200px'},type:'general',titleStatus:true,cb:function () {
+                this.$messagebox.show({'title':'这是标题','describe':'这是内容区'},{mainStyle:{width:'400px',height:'200px',marginTop:'-100px',marginLeft:'-200px'},type:'general',titleStatus:true,cb:function () {
                     alert('点击确认以后的回调')
                 },buttonName:['取消','确定']});
             },
             generalNoTitle:function(){
-                this.$messagebox.show({'title':'这是标题','describe':'是否确定'},{mainStyle:{width:'160px',height:'102px'},type:'general',titleStatus:false,cb:function () {
+                this.$messagebox.show({'title':'这是标题','describe':'是否确定'},{mainStyle:{width:'160px',height:'102px',marginTop:'-50px',marginLeft:'-80px'},type:'general',titleStatus:false,cb:function () {
                     alert('点击确认以后的回调')
                 },buttonName:['取消','确定']});
+            },
+            alertlogo:function(){
+                this.$messagebox.alerts({'title':'这是标题','describe':'消息一出，休想滚动屏幕【移动终端】！'},{mainStyle:{width:'400px',height:'88px',marginTop:'-100px',marginLeft:'-200px'},type:'alerts',titleStatus:false,cb:function () {
+                    alert('点击确认以后的回调')
+                }});
+            },
+            successbtn:function(){
+                this.$messagebox.success();
+            },
+            errorbtn:function(){
+                this.$messagebox.error();
+            },
+            nonebtn:function(){
+                this.$messagebox.none();
+            },
+            loadingbtn:function(){
+                this.$messagebox.loading()
+            },
+            noticelogo:function(){
+                this.$messagebox.notice()
             }
+
         }
     })
 </script>
