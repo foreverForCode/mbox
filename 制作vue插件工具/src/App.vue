@@ -1,6 +1,6 @@
 <template>
     <section :class="[options.maskStatus?'messagebox-container':'']">
-       <!-- 普通类型 -->
+       <!-- 普通类型 (1.有标题  2.没标题) -->
         <div v-if="options.type == 'general' " class="messagebox" :style="options.mainStyle" :class="[visible?'fade-in':'fade-out']">
             <div class="mboxTitle" :style="{backgroundColor:options.titleBgColor}" v-if="options.titleStatus">
                 <span>{{message.title}}</span>
@@ -19,6 +19,7 @@
             </div>
             
         </div>
+        <!-- alert弹框 -->
         <div v-if="options.type == 'alerts' " class="messagebox" :style="options.mainStyle" :class="[visible?'fade-in':'fade-out']">
             <div class="mboxTitle" :style="{backgroundColor:options.titleBgColor}" v-if="options.titleStatus">
                 <span>{{message.title}}</span>
@@ -35,29 +36,31 @@
             
         </div>
 
-       
+       <!-- 成功弹框 -->
         <div class="logolayout" v-if="options.type == 'success'">
           <div class="success"></div>
           <span>保存成功了</span>
-        </div> 
+        </div>
+        <!-- 失败弹框 --> 
         <div class="logolayout" v-if="options.type == 'error'">
           <div class="error"></div>
           <span>保存出错了</span>
         </div>
+        <!-- 没有logo弹框 -->
         <div class="logolayout nonesty"  v-if="options.type == 'none'">
           <span>一个没有任何图标的提示</span>
         </div> 
+        <!-- loading弹框 -->
         <div class="logolayout" v-if="options.type == 'loading'">
           <div class="loading">
             <span></span>
           </div>
           <span>加载中，请稍后...</span>
         </div>  
+        <!-- notice弹框 -->
         <div class="logolayout noticesty"  v-if="options.type == 'notice'">
           <span>5秒后自动消失，点击我也可以自动消失！！！</span>
-        </div>  
-        
-        
+        </div>    
     </section>
     
 </template>
@@ -66,27 +69,27 @@
   export default {
         data() {
             return {
-                message:{
-                    title:'',
-                    describe:'',
-                    showButton:''
+                message:{           // 显示消息内容
+                    title:'',       // 显示标题
+                    describe:'',    // 主体内容
+                    showButton:''   // 按钮名字
                 },
-                options:{
-                  type:"",
-                    mainStyle:{
+                options:{           // 配置选项
+                  type:"",          // 弹框类型（根据这个显示不同的弹框！！！）
+                    mainStyle:{     // 弹框内容主体css
                       width:'',
                       height:'',
                       marginTop:'',
                       marginLeft:''
                     },
-                    maskStatus:true,
-                    titleBgColor:'',
-                    titleStatus:false,
-                    buttonName:[],
-                    buttonColor:[],
-                    buttonBgcolor:[],
-                    bgColor:'',
-                    cb:function () {
+                    maskStatus:true,    // 遮罩层状态
+                    titleBgColor:'',    // 标题区背景颜色
+                    titleStatus:false,  // 标题区状态
+                    buttonName:[],      // 按钮名字数组
+                    buttonColor:[],     // 按钮字体颜色
+                    buttonBgcolor:[],   // 按钮背景颜色
+                    bgColor:'',         
+                    cb:function () {    // 确定时回调
 
                     }
                 },

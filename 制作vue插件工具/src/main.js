@@ -1,5 +1,7 @@
 import messageboxComponet from './App.vue';
+
 let  messagebox = {};
+
 messagebox.install = function (Vue,options) {
     var opt = {
         mainStyle:{
@@ -19,9 +21,10 @@ messagebox.install = function (Vue,options) {
         }
     },delay;
 
-    for (var key in options){
-        opt[key] = options [key]
-    }
+    // for (var key in options){
+    //     opt[key] = options [key]
+    // }
+
     const messageboxControll = Vue.extend(messageboxComponet);
     var instance = new messageboxControll().$mount(document.createElement('div'));
 

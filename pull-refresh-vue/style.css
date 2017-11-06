@@ -1,0 +1,26 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#loading {
+    width: 92%;
+    height: 50px;
+    position: absolute;
+    z-index: 0;
+    top: -10px
+}
+
+#loading p {
+    width: 100%;
+    position: absolute;
+    bottom: 30px;
+    padding: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    transition: 0.2s;
+    font-size: larger;
+    color: grey;
+}
